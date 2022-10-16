@@ -1,8 +1,14 @@
+import { Center, TextInput } from "@mantine/core"
+
 const App = () => {
   return (
-    <div>
-      <h1>hello world!</h1>
-    </div>
+    <Center m="xl">
+      <TextInput
+        placeholder="Search all movies..."
+        size="xl"
+        sx={{ width: "70%" }}
+      />
+    </Center>
   )
 }
 
