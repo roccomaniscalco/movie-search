@@ -3,7 +3,7 @@ import { node } from "prop-types"
 
 const ThemeProvider = ({ children }) => {
   return (
-    <MantineProvider withNormalizeCSS withGlobalStyles>
+    <MantineProvider withNormalizeCSS withGlobalStyles theme={{colorScheme: "dark"}}>
       {children}
     </MantineProvider>
   )

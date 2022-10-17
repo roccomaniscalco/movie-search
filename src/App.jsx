@@ -1,21 +1,31 @@
-import { Carousel } from "@mantine/carousel"
-import { Center, Image, Loader, TextInput, Title } from "@mantine/core"
+import { Center, Loader, TextInput } from "@mantine/core"
 import { IconSearch } from "@tabler/icons"
 import { useQuery } from "@tanstack/react-query"
 import api from "~/api"
+import MovieCarousel from "~/MovieCarousel"
 import useCurrentBreakpoint from "~/useCurrentBreakpoint"
 
-const BREAKPOINT_MAP_SLIDES_TO_SCROLL = {
-  xs: 3,
-  sm: 4,
-  md: 5,
-  lg: 6,
-  xl: 8,
+const CAROUSEL_BREAKPOINTS = [
+  { maxWidth: "xl", slideSize: "12.5%" }, 
+  { maxWidth: "lg", slideSize: "16.666%" }, 
+  { maxWidth: "md", slideSize: "20%" }, 
+  { maxWidth: "sm", slideSize: "25%" }, 
+  { maxWidth: "xs", slideSize: "33.333%" }, 
+]
+
+const CAROUSEL_SLIDES_TO_SCROLL = {
   xxl: 10,
+  xl: 8,
+  lg: 6,
+  md: 5,
+  sm: 4,
+  xs: 3,
 }
 
 const App = () => {
-  const breakpoint = useCurrentBreakpoint()
+  const currentBreakpoint = useCurrentBreakpoint()
+  const slidesToScroll = CAROUSEL_SLIDES_TO_SCROLL[currentBreakpoint]
+
   const { data: nowPlayingMovies } = useQuery(
     ["nowPlayingMovies"],
     api.getNowPlayingMovies
@@ -35,40 +45,17 @@ const App = () => {
         placeholder="Search for a movie..."
         size="lg"
         radius="xl"
-        m="xl"
-        p="xl"
+        mx="md"
+        my="xl"
         autoFocus
       />
 
-      <Title order={3} mx="md" mb="xs">
-        Now Playing
-      </Title>
-
-      <Carousel
-        slidesToScroll={BREAKPOINT_MAP_SLIDES_TO_SCROLL[breakpoint]}
-        styles={{ viewport: { borderRadius: 4 } }}
-        loop
-        align="start"
-        mx="md"
-        slideGap="sm"
-        slideSize="10%"
-        breakpoints={[
-          { maxWidth: "xl", slideSize: "12.5%" },
-          { maxWidth: "lg", slideSize: "16.666%" },
-          { maxWidth: "md", slideSize: "20%" },
-          { maxWidth: "sm", slideSize: "25%" },
-          { maxWidth: "xs", slideSize: "33.333%" },
-        ]}
-      >
-        {nowPlayingMovies.results.map((movie) => (
-          <Carousel.Slide key={movie.id}>
-            <Image
-              radius="sm"
-              src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
-            />
-          </Carousel.Slide>
-        ))}
-      </Carousel>
+      <MovieCarousel
+        title="Now Playing"
+        movies={nowPlayingMovies.results}
+        slidesToScroll={slidesToScroll}
+        breakpoints={CAROUSEL_BREAKPOINTS}
+      />
     </>
   )
 }
