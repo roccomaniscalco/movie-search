@@ -25,5 +25,5 @@ const getNowPlayingMovies = async () => {
   return GET(url)
 }
 
-const api = {getNowPlayingMovies}
+const api = { getNowPlayingMovies }
 export default api
