@@ -25,14 +25,14 @@ const switchVoteColor = (vote) => {
 const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
   const handleMovieClick = (movie) => {
     openModal({
-      size: "lg",
+      size: "xl",
       children: (
         <>
           <CloseButton
             onClick={handleModalClose}
-            size="lg"
-            m="lg"
-            variant="light"
+            size="md"
+            m="xs"
+            variant="filled"
             color="dark"
             sx={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
           />
@@ -57,7 +57,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
               },
             })}
           />
-          <Grid p="lg" gutter="lg" sx={{ position: "relative" }} mt="-12%">
+          <Grid p="xl" gutter="lg" sx={{ position: "relative" }} mt="-12%">
             <Grid.Col span={12}>
               <Group position="apart" align="end" noWrap spacing="lg">
                 <Title color="white" order={2}>
@@ -88,14 +88,14 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
                 />
               </Group>
             </Grid.Col>
-            <Grid.Col span={3}>
+            <Grid.Col span={2}>
               <Image
                 radius="sm"
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
                 style={{ isolation: "isolate" }}
               />
             </Grid.Col>
-            <Grid.Col span={9}>
+            <Grid.Col span={10}>
               <Text size="sm" color="dimmed" weight="bold" mb="sm">
                 {new Date(movie.release_date).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -130,7 +130,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
             <UnstyledButton onClick={() => handleMovieClick(movie)}>
               <Image
                 radius="sm"
-                src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
               />
             </UnstyledButton>
           </Carousel.Slide>
