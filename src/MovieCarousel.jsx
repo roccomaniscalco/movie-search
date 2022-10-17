@@ -23,7 +23,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
           <Carousel.Slide key={movie.id}>
             <Image
               radius="sm"
-              src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
             />
           </Carousel.Slide>
         ))}
