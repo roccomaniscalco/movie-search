@@ -4,8 +4,8 @@ import { arrayOf, number, shape, string } from "prop-types"
 
 const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
   return (
-    <>
-      <Title order={3} mx="md" mb="xs">
+    <div>
+      <Title order={2} mx="md" mb="xs">
         {title}
       </Title>
 
@@ -16,7 +16,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
         align="start"
         mx="md"
         slideGap="sm"
-        slideSize="10%" 
+        slideSize="10%"
         styles={{ viewport: { borderRadius: 4 } }}
       >
         {movies.map((movie) => (
@@ -28,24 +28,24 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
           </Carousel.Slide>
         ))}
       </Carousel>
-    </>
+    </div>
   )
 }
 
 MovieCarousel.propTypes = {
-  title: string,
+  title: string.isRequired,
   movies: arrayOf(
     shape({
-      id: string,
-      poster_path: string,
+      id: number.isRequired,
+      poster_path: string.isRequired,
     })
-  ),
-  slidesToScroll: number,
+  ).isRequired,
+  slidesToScroll: number.isRequired,
   breakpoints: arrayOf(
     shape({
-      maxWidth: string,
-      slideSize: string,
+      maxWidth: string.isRequired,
+      slideSize: string.isRequired,
     })
-  ),
+  ).isRequired,
 }
 export default MovieCarousel

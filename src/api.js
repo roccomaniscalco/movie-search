@@ -12,18 +12,33 @@ const fetcher = async (url, options) => {
   return res.json()
 }
 
-const GET = async (url) => {
+const GET = (url) => {
   return fetcher(url, {
     method: "GET",
   })
 }
 
-const getNowPlayingMovies = async () => {
+const getNowPlayingMovies = () => {
   const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${
     import.meta.env.VITE_MOVIE_DB_API_KEY
   }&language=en-US&page=1`
   return GET(url)
 }
 
-const api = { getNowPlayingMovies }
+const getGenres = () => {
+  const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${
+    import.meta.env.VITE_MOVIE_DB_API_KEY
+  }&language=en-US`
+  return GET(url)
+}
+
+const getMoviesByGenre = (genreId) => {
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${
+    import.meta.env.VITE_MOVIE_DB_API_KEY
+  }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=
+  false&page=1&with_genres=${genreId}&with_watch_monetization_types=flatrate`
+  return GET(url)
+}
+
+const api = { getNowPlayingMovies, getGenres, getMoviesByGenre }
 export default api
