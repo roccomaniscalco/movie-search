@@ -31,7 +31,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
           <CloseButton
             onClick={handleModalClose}
             size="lg"
-            m="xs"
+            m="lg"
             variant="light"
             color="dark"
             sx={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
@@ -57,7 +57,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
               },
             })}
           />
-          <Grid p="xl" gutter="xl" sx={{ position: "relative" }} mt="-14%">
+          <Grid p="lg" gutter="lg" sx={{ position: "relative" }} mt="-12%">
             <Grid.Col span={12}>
               <Group position="apart" align="end" noWrap spacing="lg">
                 <Title color="white" order={2}>
@@ -84,6 +84,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
                     </Text>
                   }
                   mb={-3}
+                  mr={-3}
                 />
               </Group>
             </Grid.Col>
