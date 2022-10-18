@@ -5,11 +5,14 @@ import {
   Group,
   Image,
   RingProgress,
+  Spoiler,
+  Stack,
   Text,
   Title,
   UnstyledButton,
 } from "@mantine/core"
 import { closeAllModals, openModal } from "@mantine/modals"
+import { IconChevronDown, IconChevronUp } from "@tabler/icons"
 import { arrayOf, number, shape, string } from "prop-types"
 
 const handleModalClose = () => {
@@ -25,7 +28,7 @@ const switchVoteColor = (vote) => {
 const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
   const handleMovieClick = (movie) => {
     openModal({
-      size: "xl",
+      size: "lg",
       children: (
         <>
           <CloseButton
@@ -47,7 +50,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
                   content: "''",
                   backgroundImage: `linear-gradient(180deg, ${theme.fn.rgba(
                     theme.colors.dark[8],
-                    0.1
+                    0
                   )} 0%, ${theme.fn.rgba(theme.colors.dark[8], 1)} 100%)`,
                   position: "absolute",
                   width: "100%",
@@ -57,7 +60,7 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
               },
             })}
           />
-          <Grid p="xl" gutter="lg" sx={{ position: "relative" }} mt="-12%">
+          <Grid p="xl" gutter="lg" sx={{ position: "relative" }} mt={-60}>
             <Grid.Col span={12}>
               <Group position="apart" align="end" noWrap spacing="lg">
                 <Title color="white" order={2}>
@@ -83,25 +86,46 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
                       {movie.vote_average}
                     </Text>
                   }
-                  mb={-3}
-                  mr={-3}
                 />
               </Group>
             </Grid.Col>
-            <Grid.Col span={2}>
+            <Grid.Col span={3}>
               <Image
                 radius="sm"
                 src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
                 style={{ isolation: "isolate" }}
               />
             </Grid.Col>
-            <Grid.Col span={10}>
-              <Text size="sm" color="dimmed" weight="bold" mb="sm">
+            <Grid.Col span={9}>
+              <Text size="md" weight="bold" mb="xs" color="white">
                 {new Date(movie.release_date).toLocaleDateString("en-US", {
                   year: "numeric",
                 })}
               </Text>
-              <Text size="md">{movie.overview} </Text>
+              <Spoiler
+                pr="xl"
+                maxHeight={75}
+                showLabel={
+                  <Group spacing={2}>
+                    <Text size="xs" weight="bold">Show More</Text>
+                    <IconChevronDown size={16}/>
+                  </Group>
+                }
+                hideLabel={
+                  <Group spacing={2}>
+                    <Text size="xs" weight="bold">Show Less</Text>
+                    <IconChevronUp size={16}/>
+                  </Group>
+                }
+                styles={{
+                  control: {
+                    color: "white",
+                    "&:hover": { textDecoration: "none" },
+                  },
+                }}
+              >
+                <Text size="md">{movie.overview}</Text>
+              </Spoiler>
             </Grid.Col>
           </Grid>
         </>
