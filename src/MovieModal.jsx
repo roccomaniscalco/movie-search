@@ -57,14 +57,13 @@ const MovieModal = ({ context, id, innerProps }) => {
           imageWrapper: {
             "&::after": {
               content: "''",
-              backgroundImage: `linear-gradient(180deg, ${theme.fn.rgba(
-                theme.colors.dark[8],
-                0
-              )} 0%, ${theme.fn.rgba(theme.colors.dark[8], 1)} 100%)`,
               position: "absolute",
-              width: "100%",
-              height: "100%",
               bottom: 0,
+              height: "100%",
+              width: "100%",
+              backgroundImage: `linear-gradient(180deg, 
+                ${theme.fn.rgba(theme.colors.dark[8], 0)}, 
+                ${theme.fn.rgba(theme.colors.dark[8], 1)})`,
             },
           },
         })}
@@ -130,7 +129,7 @@ const MovieModal = ({ context, id, innerProps }) => {
             <Text>{movie.overview}</Text>
           </Spoiler>
         </Grid.Col>
-        
+
         <Grid.Col span={3}>
           <Group spacing="xs">
             {genres.map((genre) => (

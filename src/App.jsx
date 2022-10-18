@@ -57,7 +57,6 @@ const App = () => {
           slidesToScroll={slidesToScroll}
           breakpoints={CAROUSEL_BREAKPOINTS}
         />
-
         {genres.genres.map((genre) => (
           <GenreMovieCarousel
             genre={genre}
