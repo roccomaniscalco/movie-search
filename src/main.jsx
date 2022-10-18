@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           modalProps={{
             padding: 0,
             withCloseButton: false,
-            size: "lg",
+            size: "xl",
             styles: (theme) => ({
               modal: {
                 backgroundColor: theme.colors.dark[8],

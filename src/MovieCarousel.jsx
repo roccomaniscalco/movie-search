@@ -15,7 +15,7 @@ const openMovieModal = (movie) => {
 const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
   return (
     <div>
-      <Title order={3} mx="md" mb="xs">
+      <Title order={3} color="white" mx="md" mb="xs">
         {title}
       </Title>
 

@@ -1,23 +1,42 @@
 import {
+  Badge,
   CloseButton,
   Grid,
   Group,
   Image,
-  RingProgress,
+  Progress,
   Spoiler,
   Text,
   Title,
 } from "@mantine/core"
 import { IconChevronDown, IconChevronUp } from "@tabler/icons"
+import { useQuery } from "@tanstack/react-query"
 import { number, object, shape, string } from "prop-types"
+import api from "~/api"
 
-const switchVoteColor = (vote) => {
+const getVoteColor = (vote) => {
   if (vote >= 7) return "green"
   if (vote >= 5) return "yellow"
   return "red"
 }
 
 const MovieModal = ({ context, id, innerProps }) => {
+  const { movie } = innerProps
+
+  const { data: genres } = useQuery(["genres"], api.getGenres, {
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    select: (data) =>
+      data.genres.filter((genre) => movie.genre_ids.includes(genre.id)),
+  })
+
+  const voteColor = getVoteColor(movie.vote_average)
+  const voteAsPercentage = movie.vote_average * 10
+  const releaseYear = new Date(movie.release_date).toLocaleDateString("en-US", {
+    year: "numeric",
+  })
+
   return (
     <>
       <CloseButton
@@ -28,8 +47,9 @@ const MovieModal = ({ context, id, innerProps }) => {
         color="dark"
         sx={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
       />
+
       <Image
-        src={`https://image.tmdb.org/t/p/w1280/${innerProps.movie.backdrop_path}`}
+        src={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
         styles={(theme) => ({
           image: {
             aspectRatio: "16/8",
@@ -49,68 +69,55 @@ const MovieModal = ({ context, id, innerProps }) => {
           },
         })}
       />
-      <Grid p="xl" gutter="lg" sx={{ position: "relative" }} mt={-60}>
+
+      <Grid p="xl" gutter="xl" mt={-30} sx={{ position: "relative" }}>
         <Grid.Col span={12}>
-          <Group position="apart" align="end" noWrap spacing="lg">
-            <Title color="white" order={2}>
-              {innerProps.movie.title}
-            </Title>
-            <RingProgress
-              size={70}
-              thickness={5}
-              roundCaps
-              sections={[
-                {
-                  value: (innerProps.movie.vote_average / 10) * 100,
-                  color: switchVoteColor(innerProps.movie.vote_average),
-                },
-              ]}
-              label={
-                <Text
-                  color={switchVoteColor(innerProps.movie.vote_average)}
-                  weight="bold"
-                  align="center"
-                  size="lg"
-                >
-                  {innerProps.movie.vote_average}
-                </Text>
-              }
-            />
-          </Group>
+          <Title color="white" order={2}>
+            {movie.title}
+          </Title>
         </Grid.Col>
-        <Grid.Col span={3}>
+
+        <Grid.Col span={2}>
           <Image
             radius="sm"
-            src={`https://image.tmdb.org/t/p/w342/${innerProps.movie.poster_path}`}
-            style={{ isolation: "isolate" }}
+            src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
           />
         </Grid.Col>
-        <Grid.Col span={9}>
-          <Text size="md" weight="bold" mb="xs" color="white">
-            {new Date(innerProps.movie.release_date).toLocaleDateString(
-              "en-US",
-              {
-                year: "numeric",
-              }
-            )}
-          </Text>
+
+        <Grid.Col span={7}>
+          <Group mb="sm" spacing="sm">
+            <Text weight="bold" color="white" sx={{ lineHeight: 1 }}>
+              {releaseYear}
+            </Text>
+            <Text color="dimmed" sx={{ lineHeight: 1 }}>
+              •
+            </Text>
+            <Text color={voteColor} weight="bold" sx={{ lineHeight: 1 }}>
+              {voteAsPercentage}%
+            </Text>
+            <Progress
+              value={voteAsPercentage}
+              color={voteColor}
+              radius="xl"
+              sx={{ maxWidth: 100, width: "100%" }}
+            />
+          </Group>
           <Spoiler
-            pr="xl"
-            maxHeight={75}
+            maxHeight={102}
             showLabel={
-              <Group spacing={2}>
-                <Text size="xs" weight="bold">
+              <Group spacing={4}>
+                <Text size="xs" weight="bold" transform="uppercase">
                   Show More
                 </Text>
-                <IconChevronDown size={16} />
+                <IconChevronDown size={18} />
               </Group>
             }
             hideLabel={
-              <Group spacing={2}>
-                <Text size="xs" weight="bold">
+              <Group spacing={4}>
+                <Text size="xs" weight="bold" transform="uppercase">
                   Show Less
                 </Text>
-                <IconChevronUp size={16} />
+                <IconChevronUp size={18} />
               </Group>
             }
             styles={{
@@ -120,8 +127,18 @@ const MovieModal = ({ context, id, innerProps }) => {
               },
             }}
           >
-            <Text size="md">{innerProps.movie.overview}</Text>
+            <Text>{movie.overview}</Text>
           </Spoiler>
+        </Grid.Col>
+        
+        <Grid.Col span={3}>
+          <Group spacing="xs">
+            {genres.map((genre) => (
+              <Badge key={genre.id} size="sm" variant="filled">
+                {genre.name}
+              </Badge>
+            ))}
+          </Group>
         </Grid.Col>
       </Grid>
     </>
