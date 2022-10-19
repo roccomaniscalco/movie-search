@@ -31,7 +31,6 @@ const MovieModal = ({ context, id, innerProps }) => {
       data.genres.filter((genre) => movie.genre_ids.includes(genre.id)),
   })
 
-  const voteColor = getVoteColor(movie.vote_average)
   const voteAsPercentage = movie.vote_average * 10
   const releaseYear = new Date(movie.release_date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -100,18 +99,26 @@ const MovieModal = ({ context, id, innerProps }) => {
             <Text weight="bold" color="white" sx={{ lineHeight: 1 }}>
               {releaseYear}
             </Text>
-            <Text color="dimmed" sx={{ lineHeight: 1 }}>
-              •
-            </Text>
-            <Text color={voteColor} weight="bold" sx={{ lineHeight: 1 }}>
-              {voteAsPercentage}%
-            </Text>
-            <Progress
-              value={voteAsPercentage}
-              color={voteColor}
-              radius="xl"
-              sx={{ maxWidth: 100, width: "100%" }}
-            />
+            {movie.vote_count > 0 && (
+              <>
+                <Text color="dimmed" sx={{ lineHeight: 1 }}>
+                  •
+                </Text>
+                <Text
+                  color={getVoteColor(movie.vote_average)}
+                  weight="bold"
+                  sx={{ lineHeight: 1 }}
+                >
+                  {voteAsPercentage}%
+                </Text>
+                <Progress
+                  value={voteAsPercentage}
+                  color={getVoteColor(movie.vote_average)}
+                  radius="xl"
+                  sx={{ maxWidth: 100, width: "100%" }}
+                />
+              </>
+            )}
           </Group>
           <Spoiler
             maxHeight={102}
@@ -167,6 +174,7 @@ MovieModal.propTypes = {
       title: string.isRequired,
       release_date: string.isRequired,
       vote_average: number.isRequired,
+      vote_count: number.isRequired,
       overview: string.isRequired,
     }).isRequired,
   }).isRequired,

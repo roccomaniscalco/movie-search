@@ -10,7 +10,7 @@ import { useDebouncedValue } from "@mantine/hooks"
 import { openContextModal } from "@mantine/modals"
 import { IconMovieOff, IconSearch } from "@tabler/icons"
 import { useQuery } from "@tanstack/react-query"
-import { shape, string } from "prop-types"
+import { number, shape, string } from "prop-types"
 import { forwardRef, useState } from "react"
 import api from "~/api"
 
@@ -46,7 +46,6 @@ const getVoteColor = (vote) => {
 }
 
 const MovieSearchResultsItem = forwardRef(({ movie, ...props }, ref) => {
-  const voteColor = getVoteColor(movie.vote_average)
   const voteAsPercentage = movie.vote_average * 10
   const releaseYear = new Date(movie.release_date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -73,17 +72,21 @@ const MovieSearchResultsItem = forwardRef(({ movie, ...props }, ref) => {
             <Text size="xs" weight="bold" color="dimmed" sx={{ lineHeight: 1 }}>
               {releaseYear}
             </Text>
-            <Text size="xs" color="dimmed" sx={{ lineHeight: 1 }}>
-              •
-            </Text>
-            <Text
-              size="xs"
-              color={voteColor}
-              weight="bold"
-              sx={{ lineHeight: 1 }}
-            >
-              {voteAsPercentage}%
-            </Text>
+            {movie.vote_count > 0 && (
+              <>
+                <Text size="xs" color="dimmed" sx={{ lineHeight: 1 }}>
+                  •
+                </Text>
+                <Text
+                  size="xs"
+                  color={getVoteColor(movie.vote_average)}
+                  weight="bold"
+                  sx={{ lineHeight: 1 }}
+                >
+                  {voteAsPercentage}%
+                </Text>
+              </>
+            )}
           </Group>
         </Stack>
       </Group>
@@ -142,6 +145,9 @@ MovieSearchResultsItem.propTypes = {
   movie: shape({
     title: string.isRequired,
     poster_path: string,
+    release_date: string.isRequired,
+    vote_average: number.isRequired,
+    vote_count: number.isRequired,
   }).isRequired,
 }
 
