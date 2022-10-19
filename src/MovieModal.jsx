@@ -50,6 +50,7 @@ const MovieModal = ({ context, id, innerProps }) => {
 
       <Image
         src={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
+        alt={`${movie.title} backdrop`}
         styles={(theme) => ({
           image: {
             aspectRatio: "16/8",
@@ -80,6 +81,7 @@ const MovieModal = ({ context, id, innerProps }) => {
           <Image
             radius="sm"
             src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+            alt={`${movie.title} poster`}
           />
         </Grid.Col>
 
