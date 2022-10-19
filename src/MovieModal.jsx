@@ -9,7 +9,7 @@ import {
   Text,
   Title,
 } from "@mantine/core"
-import { IconChevronDown, IconChevronUp } from "@tabler/icons"
+import { IconChevronDown, IconChevronUp, IconMovieOff } from "@tabler/icons"
 import { useQuery } from "@tanstack/react-query"
 import { number, object, shape, string } from "prop-types"
 import api from "~/api"
@@ -49,8 +49,13 @@ const MovieModal = ({ context, id, innerProps }) => {
       />
 
       <Image
-        src={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
+        src={
+          movie.backdrop_path &&
+          `https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`
+        }
         alt={`${movie.title} backdrop`}
+        withPlaceholder
+        placeholder={<IconMovieOff size={64} />}
         styles={(theme) => ({
           image: {
             aspectRatio: "16/8",
@@ -79,9 +84,14 @@ const MovieModal = ({ context, id, innerProps }) => {
 
         <Grid.Col span={2}>
           <Image
-            radius="sm"
-            src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+            src={
+              movie.poster_path &&
+              `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+            }
             alt={`${movie.title} poster`}
+            withPlaceholder
+            placeholder={<IconMovieOff size={32} />}
+            radius={movie.poster_path ? "sm" : 0}
           />
         </Grid.Col>
 
@@ -152,8 +162,8 @@ MovieModal.propTypes = {
   innerProps: shape({
     movie: shape({
       id: number.isRequired,
-      poster_path: string.isRequired,
-      backdrop_path: string.isRequired,
+      poster_path: string,
+      backdrop_path: string,
       title: string.isRequired,
       release_date: string.isRequired,
       vote_average: number.isRequired,

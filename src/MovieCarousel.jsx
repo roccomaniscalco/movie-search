@@ -1,7 +1,7 @@
 import { Carousel } from "@mantine/carousel"
 import { createStyles, Image, Title, UnstyledButton } from "@mantine/core"
 import { openContextModal } from "@mantine/modals"
-import { IconChevronRight, IconChevronLeft } from "@tabler/icons"
+import { IconChevronRight, IconChevronLeft, IconMovieOff } from "@tabler/icons"
 import { arrayOf, number, shape, string } from "prop-types"
 
 const useStyles = createStyles((theme, _params, getRef) => ({
@@ -65,8 +65,13 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
             >
               <Image
                 radius="sm"
-                src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+                src={
+                  movie.poster_path &&
+                  `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+                }
                 alt={`${movie.title} poster`}
+                withPlaceholder
+                placeholder={<IconMovieOff siz={32} />}
               />
             </UnstyledButton>
           </Carousel.Slide>
@@ -81,7 +86,7 @@ MovieCarousel.propTypes = {
   movies: arrayOf(
     shape({
       id: number.isRequired,
-      poster_path: string.isRequired,
+      poster_path: string,
     })
   ).isRequired,
   slidesToScroll: number.isRequired,

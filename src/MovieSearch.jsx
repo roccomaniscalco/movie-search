@@ -8,7 +8,7 @@ import {
 } from "@mantine/core"
 import { useDebouncedValue } from "@mantine/hooks"
 import { openContextModal } from "@mantine/modals"
-import { IconMovie, IconSearch } from "@tabler/icons"
+import { IconMovieOff, IconSearch } from "@tabler/icons"
 import { useQuery } from "@tanstack/react-query"
 import { shape, string } from "prop-types"
 import { forwardRef, useState } from "react"
@@ -59,12 +59,11 @@ const MovieSearchResultsItem = forwardRef(({ movie, ...props }, ref) => {
           radius="sm"
           alt={`${movie.title} poster`}
           src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-              : null
+            movie.poster_path &&
+            `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
           }
         >
-          <IconMovie />
+          <IconMovieOff />
         </Avatar>
         <Stack spacing={6} justify="center">
           <Text lineClamp={1} color="white" sx={{ lineHeight: 1 }}>
