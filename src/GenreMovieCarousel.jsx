@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
 import { arrayOf, number, shape, string } from "prop-types"
-import React from "react"
 import api from "~/api"
 import MovieCarousel from "~/MovieCarousel"
 
