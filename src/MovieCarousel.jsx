@@ -54,6 +54,8 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
         classNames={classes}
         nextControlIcon={<IconChevronRight />}
         previousControlIcon={<IconChevronLeft/>}
+        nextControlLabel="Show next slide of movies"
+        previousControlLabel="Show previous slide of movies"
       >
         {movies.map((movie) => (
           <Carousel.Slide key={movie.id}>
