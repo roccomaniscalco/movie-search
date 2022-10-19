@@ -14,8 +14,23 @@ import { shape, string } from "prop-types"
 import { forwardRef, useState } from "react"
 import api from "~/api"
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme, _params, getRef) => ({
+  root: {
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      flex: 1,
+
+      [`& .${getRef("input")}`]: {
+        transition: "none",
+        width: "100%",
+        "&:focus": {
+          width: "100%",
+        },
+      },
+    },
+  },
+
   input: {
+    ref: getRef("input"),
     transition: "width 150ms ease",
     width: 180,
     "&:focus": {

@@ -39,7 +39,7 @@ const App = () => {
   })
 
   return (
-    <AppShell header={<AppHeader />}>
+    <AppShell header={<AppHeader />} padding={0}>
       <Stack spacing="xl" mb="xl" mt="sm">
         <MovieCarousel
           title="Now Playing"
