@@ -1,7 +1,7 @@
-import { Stack, TextInput } from "@mantine/core"
-import { IconSearch } from "@tabler/icons"
+import { AppShell, Stack } from "@mantine/core"
 import { useQuery } from "@tanstack/react-query"
 import api from "~/api"
+import AppHeader from "~/AppHeader"
 import GenreMovieCarousel from "~/GenreMovieCarousel"
 import MovieCarousel from "~/MovieCarousel"
 import useCurrentBreakpoint from "~/useCurrentBreakpoint"
@@ -39,17 +39,7 @@ const App = () => {
   })
 
   return (
-    <>
-      <TextInput
-        icon={<IconSearch />}
-        placeholder="Search for a movie..."
-        size="lg"
-        radius="xl"
-        mx="md"
-        my="xl"
-        autoFocus
-      />
-
+    <AppShell header={<AppHeader />}>
       <Stack spacing="xl" mb="xl">
         <MovieCarousel
           title="Now Playing"
@@ -66,7 +56,7 @@ const App = () => {
           />
         ))}
       </Stack>
-    </>
+    </AppShell>
   )
 }
 
