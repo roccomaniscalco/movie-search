@@ -53,13 +53,16 @@ const MovieCarousel = ({ title, movies, slidesToScroll, breakpoints }) => {
         controlSize={40}
         classNames={classes}
         nextControlIcon={<IconChevronRight />}
-        previousControlIcon={<IconChevronLeft/>}
+        previousControlIcon={<IconChevronLeft />}
         nextControlLabel="Show next slide of movies"
         previousControlLabel="Show previous slide of movies"
       >
         {movies.map((movie) => (
           <Carousel.Slide key={movie.id}>
-            <UnstyledButton onClick={() => openMovieModal(movie)} aria-label={`Learn about ${movie.title}`}>
+            <UnstyledButton
+              onClick={() => openMovieModal(movie)}
+              aria-label={`Learn about ${movie.title}`}
+            >
               <Image
                 radius="sm"
                 src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
