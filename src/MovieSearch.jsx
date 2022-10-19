@@ -115,7 +115,7 @@ const MovieSearch = () => {
   )
 
   const handleMovieSearchResultsItemSubmit = (movieSearchResult) => {
-    setInputValue(movieSearchResult.movie.title)
+    setInputValue(inputValue) // prevent user input from being cleared
     openContextModal({
       modal: "movie",
       innerProps: {
@@ -135,7 +135,7 @@ const MovieSearch = () => {
       itemComponent={MovieSearchResultsItem}
       classNames={classes}
       placeholder="Search movies"
-      limit={10}
+      limit={5}
     />
   )
 }
