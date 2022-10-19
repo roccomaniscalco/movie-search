@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <AppShell header={<AppHeader />}>
-      <Stack spacing="xl" mb="xl">
+      <Stack spacing="xl" mb="xl" mt="sm">
         <MovieCarousel
           title="Now Playing"
           movies={nowPlayingMovies.results}

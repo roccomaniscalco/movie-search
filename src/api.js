@@ -36,9 +36,21 @@ const getMoviesByGenre = (genreId) => {
   const url = `https://api.themoviedb.org/3/discover/movie?api_key=${
     import.meta.env.VITE_MOVIE_DB_API_KEY
   }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=
-  false&page=1&with_genres=${genreId}&with_watch_monetization_types=flatrate`
+  false&page=1&with_genres=${genreId}`
   return GET(url)
 }
 
-const api = { getNowPlayingMovies, getGenres, getMoviesByGenre }
+const getMovieSearchResults = (searchTerm) => {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${
+    import.meta.env.VITE_MOVIE_DB_API_KEY
+  }&language=en-US&query=${searchTerm}&page=1&include_adult=false`
+  return GET(url)
+}
+
+const api = {
+  getNowPlayingMovies,
+  getGenres,
+  getMoviesByGenre,
+  getMovieSearchResults,
+}
 export default api
